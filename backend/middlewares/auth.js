@@ -16,14 +16,14 @@ exports.isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
   
   req.user = await User.findById(decoded.id);
-  console.log("Sujan",req.user)
+  // console.log("Sujan",req.user)
   next();
 });
 
 // Handling user roles
 exports.authorizeUserRoles = (...roles) => {
   return (req, res, next) => {
-    console.log("Next Sujan",req.user)
+    // console.log("Next Sujan",req.user)
     if (!roles.includes(req.user.role)) {
       return next(
         new ErrorHandler(
