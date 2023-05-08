@@ -1,5 +1,6 @@
 import React from "react";
 import "../../App.css"
+import { Outlet } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -40,6 +41,7 @@ const Header = () => {
           </span>
         </div>
       </nav>
+    <Outlet />
     </>
   );
 };
