@@ -3,16 +3,17 @@ import "./App.css";
 import Home from "./components/Home";
 import Footer from "./components/layouts/Footer";
 import Header from "./components/layouts/Header";
+import ProductDetails from "./components/product/ProductDetails";
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Routes>
-        <Route path="/" element={<Header />}>
+          <Route path="/" element={<Header />}>
             <Route index element={<Home />} />
-          {/* <Home />  */}
-        </Route>
+            <Route path="/product/:id" element={<ProductDetails />} />
+          </Route>
         </Routes>
         <Footer />
       </div>
