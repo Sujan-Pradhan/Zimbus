@@ -1,6 +1,6 @@
 import React from "react";
-import "../../App.css"
-import { Outlet } from "react-router-dom";
+import "../../App.css";
+import { Link, Outlet } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -8,7 +8,9 @@ const Header = () => {
       <nav className="navbar row">
         <div className="col-12 col-md-3">
           <div className="navbar-brand">
-            <img src="/images/logo.png" alt="logo" />
+            <Link to={"/"}>
+              <img src="/images/logo.png" alt="logo" />
+            </Link>
           </div>
         </div>
 
@@ -41,7 +43,7 @@ const Header = () => {
           </span>
         </div>
       </nav>
-    <Outlet />
+      <Outlet />
     </>
   );
 };

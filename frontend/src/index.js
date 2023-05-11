@@ -10,6 +10,7 @@ import AlertTemplate from "react-alert-template-basic";
 const options = {
   timeout: 5000,
   positions: positions.TOP_RIGHT,
+  offset: '30px',
   transitions: transitions.SCALE,
 };
 
