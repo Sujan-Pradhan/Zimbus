@@ -33,7 +33,6 @@ const ProductDetails = () => {
     maxWidth: "100%",
     width: "auto",
     height: "auto",
-    objectFit: "contain",
   };
   const containerStyle = {
     height: "500px", // set a fixed height for the carousel container

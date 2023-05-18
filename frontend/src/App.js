@@ -12,6 +12,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Header />}>
             <Route index element={<Home />} />
+            <Route  path="/search/:keyword" element={<Home />} />
             <Route path="/product/:id" element={<ProductDetails />} />
           </Route>
         </Routes>
