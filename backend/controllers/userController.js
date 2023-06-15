@@ -5,8 +5,15 @@ const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
 
+const cloudinary = require("cloudinary");
+
 // Register a user => /api/v1/register
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
+  const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+    folder: "avatar",
+    width: 150,
+    crop: "scale",
+  });
   const { name, email, password } = req.body;
 
   // Checking if any field is empty
@@ -19,8 +26,8 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     email,
     password,
     avatar: {
-      public_id: "samples/people/boy-snow-hoodie",
-      url: "https://res.cloudinary.com/dmn9mkoua/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1682699299/samples/people/boy-snow-hoodie.jpg",
+      public_id: result.public_id,
+      url: result.secure_url,
     },
   });
 
@@ -80,9 +87,10 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
   await user.save({ validateBeforeSave: false });
 
   // Create reset password url
-  const resetUrl = `${req.protocol}://${req.get(
-    "host"
-  )}/api/v1/password/reset/${resetToken}`;
+  // const resetUrl = `${req.protocol}://${req.get(
+  //   "host"
+  // )}/api/v1/password/reset/${resetToken}`;
+  const resetUrl = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
 
   const message = `Your password reset token is as follow: \n\n ${resetUrl}\n\n If you have not requested this email, then ignore it`;
   try {
@@ -174,7 +182,24 @@ exports.updateProfiles = catchAsyncErrors(async (req, res, next) => {
     email: req.body.email,
   };
 
-  // Update avatoar => TODO
+  // Update avatar
+  if (req.body.avatar !== "") {
+    const user = await User.findById(req.user.id);
+    const image_id = user.avatar.public_id;
+    const res = await cloudinary.v2.uploader.destroy(image_id);
+
+    const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+      folder: "avatar",
+      width: 150,
+      crop: "scale",
+    });
+
+    newUserData.avatar = {
+      public_id: result.public_id,
+      url: result.url,
+    };
+  }
+
   const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
     new: true,
     runValidators: true,
