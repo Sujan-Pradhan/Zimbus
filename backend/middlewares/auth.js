@@ -11,7 +11,7 @@ exports.isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
   //   console.log("Sujan", token);
 
   if (!token) {
-    return next(new ErrorHandler("Login first to access this resoource", 401));
+    return next(new ErrorHandler("Login first to access this resource", 401));
   }
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
   
