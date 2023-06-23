@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Loader from "../layouts/Loader";
 import MetaData from "../layouts/MetaData";
 
-const Login = () => {
+const Login = ({ location }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -18,9 +18,11 @@ const Login = () => {
     (state) => state.auth
   );
 
+  const redirect = location.search ? location.search.split("=")[1] : "/";
+
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/");
+      navigate(redirect);
     }
 
     if (error) {
