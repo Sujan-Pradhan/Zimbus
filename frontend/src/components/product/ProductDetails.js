@@ -7,7 +7,7 @@ import MetaData from "../layouts/MetaData";
 import { useParams } from "react-router-dom";
 import Carousel from "react-bootstrap/Carousel";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-import { addItemCart } from "../../actions/cartAction";
+import { addItemToCart } from "../../actions/cartAction";
 
 const ProductDetails = () => {
   const alert = useAlert();
@@ -29,7 +29,7 @@ const ProductDetails = () => {
   }, [dispatch, alert, error, id]);
 
   const addToCart = () => {
-    dispatch(addItemCart(id, quantity));
+    dispatch(addItemToCart(id, quantity));
     alert.success("Item Added Successfully");
   };
 
@@ -38,16 +38,16 @@ const ProductDetails = () => {
 
     if (count.valueAsNumber >= product.stock) return;
 
-    const quantity = count.valueAsNumber + 1;
-    setQuantity(quantity);
+    const qty = count.valueAsNumber + 1;
+    setQuantity(qty);
   };
 
   const decreaseQuantity = () => {
     const count = document.querySelector(".count");
 
     if (count.valueAsNumber <= 1) return;
-    const quantity = count.valueAsNumber - 1;
-    setQuantity(quantity);
+    const qty = count.valueAsNumber - 1;
+    setQuantity(qty);
   };
 
   const imageStyle = {
