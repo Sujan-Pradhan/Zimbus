@@ -24,7 +24,7 @@ const Shipping = () => {
 
     dispatch(saveShippingInfo({ address, city, postalCode, phoneNo, country }));
 
-    navigate("/confirm");
+    navigate("/order/confirm");
   };
 
   return (
