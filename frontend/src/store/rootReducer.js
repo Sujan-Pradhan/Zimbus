@@ -9,7 +9,11 @@ import {
   userReducer,
 } from "../reducers/userReducer";
 import { cartReducer } from "../reducers/cartReducers";
-import { newOrderReducer } from "../reducers/orderReducers";
+import {
+  myOrdersReducer,
+  newOrderReducer,
+  orderDetailReducer,
+} from "../reducers/orderReducers";
 
 export const rootReducer = combineReducers({
   products: productReducer,
@@ -19,4 +23,6 @@ export const rootReducer = combineReducers({
   forgetPassword: forgetPasswordReducer,
   cart: cartReducer,
   newOrder: newOrderReducer,
+  myOrders: myOrdersReducer,
+  orderDetails: orderDetailReducer,
 });
