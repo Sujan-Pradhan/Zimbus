@@ -52,10 +52,10 @@ const Payment = () => {
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
 
   if (orderInfo) {
-    (order.itemsPrice = orderInfo.itemsPrice),
-      (order.shippingPrice = orderInfo.shippingPrice),
-      (order.taxPrice = orderInfo.taxPrice),
-      (order.totalPrice = orderInfo.totalPrice);
+    order.itemsPrice = orderInfo.itemsPrice;
+    order.shippingPrice = orderInfo.shippingPrice;
+    order.taxPrice = orderInfo.taxPrice;
+    order.totalPrice = orderInfo.totalPrice;
   }
 
   const paymentData = {
@@ -154,7 +154,7 @@ const Payment = () => {
             </div>
 
             <button id="pay_btn" type="submit" className="btn btn-block py-3">
-              Pay {`- $${orderInfo && orderInfo.totalPrice}`}
+              Pay {`- ${orderInfo && orderInfo.totalPrice}`}
             </button>
           </form>
         </div>

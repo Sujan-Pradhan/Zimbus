@@ -23,6 +23,8 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import Payment from "./components/cart/Payment";
 import orderSuccess from "./components/cart/orderSuccess";
+import ListOrder from "./components/order/ListOrder";
+import OrderDetails from "./components/order/OrderDetails";
 
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
@@ -46,11 +48,11 @@ function App() {
             <Route path="/search/:keyword?" element={<Home />} />
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} /> */}
-        {/* <Route path="/me" element={<ProtectedRoute element={Profile} />} /> */}
+            <Route path="/register" element={<Register />} />
+        <Route path="/me" element={<ProtectedRoute element={Profile} />} />
 
-        {/* <Route path="/me" element={<Profile />} /> */}
-        {/* </Route>
+        <Route path="/me" element={<Profile />} />
+        </Route>
         </Routes>
         <ProtectedRoute path="/me" element={Profile} />
         <Footer /> */}
@@ -73,6 +75,8 @@ function App() {
           <ProtectedRoute path="/shipping" element={Shipping} />
           <ProtectedRoute path="/order/confirm" element={ConfirmOrder} />
           <ProtectedRoute path="/success" element={orderSuccess} />
+          <ProtectedRoute path="/orders/me" element={ListOrder} />
+          <ProtectedRoute path="/order/:id" element={OrderDetails} />
           {stripeApiKey && (
             <Elements stripe={loadStripe(stripeApiKey)}>
               <ProtectedRoute path="/payment" element={Payment} />
