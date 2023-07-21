@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import {
   productReducer,
   productDetailsReducer,
+  newReviewReducer,
 } from "../reducers/productReducer";
 import {
   authReducer,
@@ -25,4 +26,5 @@ export const rootReducer = combineReducers({
   newOrder: newOrderReducer,
   myOrders: myOrdersReducer,
   orderDetails: orderDetailReducer,
+  newReview: newReviewReducer,
 });
