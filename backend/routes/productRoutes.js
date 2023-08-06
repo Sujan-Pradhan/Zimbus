@@ -8,6 +8,7 @@ const {
   createProductReview,
   getProductReviews,
   deleteReview,
+  getAdminProducts,
 } = require("../controllers/productControllers");
 const {
   isAuthenticatedUser,
@@ -22,6 +23,7 @@ router.post(
   newProduct
 );
 router.get("/products", getProducts);
+router.get("/admin/products", getAdminProducts);
 router.get("/product/:id", getProduct);
 router.put(
   "/admin/product/:id",

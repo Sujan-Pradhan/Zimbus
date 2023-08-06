@@ -4,27 +4,39 @@ import Home from "./components/Home";
 import Footer from "./components/layouts/Footer";
 import Header from "./components/layouts/Header";
 import ProductDetails from "./components/product/ProductDetails";
-import Login from "./components/user/Login";
-import Register from "./components/user/Register";
 import { useEffect, useState } from "react";
 import store from "./store/store";
 import { loadUser } from "./actions/userAction";
+
+// Auth or User Imports
+import Login from "./components/user/Login";
+import Register from "./components/user/Register";
 import Profile from "./components/user/Profile";
-import ProtectedRoute from "./components/route/ProtectedRoute";
 import UpdateProfile from "./components/user/UpdateProfile";
 import UpdatePassword from "./components/user/UpdatePassword";
 import ForgetPassword from "./components/user/ForgetPassword";
 import NewPassword from "./components/user/NewPassword";
+
+import ProtectedRoute from "./components/route/ProtectedRoute";
+
+//  Carts Import
 import Cart from "./components/cart/Cart";
 import Shipping from "./components/cart/Shipping";
 import ConfirmOrder from "./components/cart/ConfirmOrder";
+import orderSuccess from "./components/cart/orderSuccess";
+
+// Order Import
+import ListOrder from "./components/order/ListOrder";
+import OrderDetails from "./components/order/OrderDetails";
+
+// Admin Imports
+import Dashboard from "./components/admin/Dashboard";
+
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import Payment from "./components/cart/Payment";
-import orderSuccess from "./components/cart/orderSuccess";
-import ListOrder from "./components/order/ListOrder";
-import OrderDetails from "./components/order/OrderDetails";
+import ListProducts from "./components/admin/ListProducts";
 
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
@@ -77,12 +89,19 @@ function App() {
           <ProtectedRoute path="/success" element={orderSuccess} />
           <ProtectedRoute path="/orders/me" element={ListOrder} />
           <ProtectedRoute path="/order/:id" element={OrderDetails} />
+
           {stripeApiKey && (
             <Elements stripe={loadStripe(stripeApiKey)}>
               <ProtectedRoute path="/payment" element={Payment} />
             </Elements>
           )}
         </div>
+        <ProtectedRoute path="/dashboard" isAdmin={true} element={Dashboard} />
+        <ProtectedRoute
+          path="/admin/products"
+          isAdmin={true}
+          element={ListProducts}
+        />
         <Footer />
       </div>
     </Router>

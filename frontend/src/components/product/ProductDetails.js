@@ -8,9 +8,9 @@ import { useParams } from "react-router-dom";
 import Carousel from "react-bootstrap/Carousel";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { addItemToCart } from "../../actions/cartAction";
-import { NEW_REVIEW_RESET } from "../../constants/orderConstant";
-import { newReviews } from "../../actions/orderAction";
+import { newReviews } from "../../actions/productAction";
 import ListReviews from "../reviews/ListReviews";
+import { NEW_REVIEW_RESET } from "../../constants/productConstants";
 
 const ProductDetails = () => {
   const alert = useAlert();
@@ -120,7 +120,7 @@ const ProductDetails = () => {
     const formData = new FormData();
     formData.set("rating", rating);
     formData.set("comment", comment);
-    formData.set("productId", match.params.id);
+    formData.set("productId", id);
 
     dispatch(newReviews(formData));
   };
