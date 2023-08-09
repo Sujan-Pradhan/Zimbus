@@ -2,11 +2,32 @@ const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const Product = require("../models/productModel");
 const APIFeatures = require("../utils/apiFeatures");
 const ErrorHandler = require("../utils/errorHandler");
+const cloudinary = require("cloudinary");
 
 // Create new product => api/v1/admin/product/new
 exports.newProduct = catchAsyncErrors(async (req, res, next) => {
   // console.log(req);
+  let images = [];
+  if (typeof req.body.images === "string") {
+    images.push(req.body.images);
+  } else {
+    images = req.body.images;
+  }
 
+  let imagesLinks = [];
+
+  for (let i = 0; i < images.length; i++) {
+    const result = await cloudinary.v2.uploader.upload(images[i], {
+      folder: "products",
+    });
+
+    imagesLinks.push({
+      public_id: result.public_id,
+      url: result.secure_url,
+    });
+  }
+
+  req.body.images = imagesLinks;
   req.body.user = req.user.id;
 
   const product = await Product.create(req.body);
@@ -41,7 +62,7 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
 });
 
 // Get all products (Admin) => /api/v1/admin/products
-exports.getAdminProducts = catchAsyncErrors(async (req, res,next) => {
+exports.getAdminProducts = catchAsyncErrors(async (req, res, next) => {
   const products = await Product.find();
 
   res.status(200).json({
@@ -100,6 +121,12 @@ exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
     //   success: false,
     //   message: "Product not found",
     // });
+  }
+  // Deleting images associated with the product
+  for (let i = 0; i < product.images.length; i++) {
+    const result = await cloudinary.v2.uploader.destroy(
+      product.images[i].public_id
+    );
   }
   await Product.deleteOne();
 

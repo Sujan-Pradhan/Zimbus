@@ -37,9 +37,12 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import Payment from "./components/cart/Payment";
 import ListProducts from "./components/admin/ListProducts";
+import NewProduct from "./components/admin/NewProduct";
+import { useSelector } from "react-redux";
 
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
+  const { loading, user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     store.dispatch(loadUser());
@@ -102,7 +105,12 @@ function App() {
           isAdmin={true}
           element={ListProducts}
         />
-        <Footer />
+        <ProtectedRoute
+          path="/admin/product"
+          isAdmin={true}
+          element={NewProduct}
+        />
+        {!loading && user.role !== "admin" && <Footer />}
       </div>
     </Router>
   );
