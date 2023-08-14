@@ -13,6 +13,7 @@ import {
 } from "../reducers/userReducer";
 import { cartReducer } from "../reducers/cartReducers";
 import {
+  allOrdersReducer,
   myOrdersReducer,
   newOrderReducer,
   orderDetailReducer,
@@ -22,7 +23,7 @@ export const rootReducer = combineReducers({
   products: productReducer,
   productDetails: productDetailsReducer,
   newProductReducer: newProductReducer,
-  productDeleteUpdateReducer:productDeleteUpdateReducer,
+  productDeleteUpdateReducer: productDeleteUpdateReducer,
   auth: authReducer,
   user: userReducer,
   forgetPassword: forgetPasswordReducer,
@@ -30,5 +31,6 @@ export const rootReducer = combineReducers({
   newOrder: newOrderReducer,
   myOrders: myOrdersReducer,
   orderDetails: orderDetailReducer,
+  allOrdersReducer: allOrdersReducer,
   newReview: newReviewReducer,
 });

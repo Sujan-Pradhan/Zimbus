@@ -40,6 +40,7 @@ import ListProducts from "./components/admin/ListProducts";
 import NewProduct from "./components/admin/NewProduct";
 import { useSelector } from "react-redux";
 import UpdateProduct from "./components/admin/UpdateProduct";
+import OrderList from "./components/admin/OrderList";
 
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
@@ -115,6 +116,11 @@ function App() {
           path="/admin/product/:id"
           isAdmin={true}
           element={UpdateProduct}
+        />
+        <ProtectedRoute
+          path="/admin/orders"
+          isAdmin={true}
+          element={OrderList}
         />
         {!loading && user.role !== "admin" && <Footer />}
       </div>
