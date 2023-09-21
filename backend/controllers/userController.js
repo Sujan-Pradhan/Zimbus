@@ -91,6 +91,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
   //   "host"
   // )}/api/v1/password/reset/${resetToken}`;
   const resetUrl = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
+  // const resetUrl = `${req.protocol}://${req.get('host')}/password/reset/${resetToken}`;
 
   const message = `Your password reset token is as follow: \n\n ${resetUrl}\n\n If you have not requested this email, then ignore it`;
   try {
@@ -288,7 +289,9 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
     );
   }
 
-  // Remove avatar from the  ~ TODO
+  // Remove avatar from the
+  const image_id = user.avatar.public_id;
+ await cloudinary.v2.uploader.destroy(image_id);
 
   await user.deleteOne();
 
