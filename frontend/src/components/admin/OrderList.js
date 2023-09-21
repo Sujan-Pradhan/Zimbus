@@ -2,19 +2,23 @@ import React, { useEffect } from "react";
 import MetaData from "../layouts/MetaData";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
-import { allOrders, clearErrors } from "../../actions/orderAction";
-import { Link } from "react-router-dom";
+import { allOrders, clearErrors, deleteOrder } from "../../actions/orderAction";
+import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { MDBDataTable } from "mdbreact";
 import Loader from "../layouts/Loader";
+import { DELETE_ORDER_RESET } from "../../constants/orderConstant";
 
 const OrderList = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { loading, error, orders, totalAmount } = useSelector(
     (state) => state.allOrdersReducer
   );
+
+  const { isDeleted } = useSelector((state) => state.orderReducer);
 
   useEffect(() => {
     dispatch(allOrders());
@@ -23,7 +27,17 @@ const OrderList = () => {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, error, alert]);
+
+    if (isDeleted) {
+      alert.success("Product Deleted Succesfully");
+      navigate("/admin/orders");
+      dispatch({ type: DELETE_ORDER_RESET });
+    }
+  }, [dispatch, error, alert, isDeleted, navigate]);
+
+  const deleteOrderHandler = (id) => {
+    dispatch(deleteOrder(id));
+  };
 
   const setOrders = () => {
     const data = {
@@ -76,7 +90,10 @@ const OrderList = () => {
             >
               <i className="fa fa-eye"></i>
             </Link>
-            <button className="btn btn-danger py-1 px-2 ml-2 ">
+            <button
+              className="btn btn-danger py-1 px-2 ml-2 "
+              onClick={() => deleteOrderHandler(order._id)}
+            >
               <i className="fa fa-trash"></i>
             </button>
           </>
